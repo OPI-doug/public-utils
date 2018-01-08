@@ -1,0 +1,13 @@
+[Unit]
+Description=vault server
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+EnvironmentFile=-/etc/sysconfig/vault
+Restart=on-failure
+ExecStart=/bin/vault server -config=/etc/vault.d/vconf.conf
+
+[Install]
+WantedBy=multi-user.target
+
