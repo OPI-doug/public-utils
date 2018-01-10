@@ -4,8 +4,8 @@ ssh-keygen -t rsa -b 4096 -f tmpkey -q -N ""
 vault auth `cat root.token`
 vault write secret/newgolemkey value="`cat tmpkey`"
 vault write secret/newgolemkeypub value="`cat tmpkey.pub`"
-vault read secret/newgolemkey
-vault read secret/newgolemkeypub
+#vault read secret/newgolemkey
+#vault read secret/newgolemkeypub
 rm tmpkey
 
 # at this point, the new keys are stored. We have them in vault, and we want

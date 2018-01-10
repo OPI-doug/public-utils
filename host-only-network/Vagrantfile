@@ -1,0 +1,45 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "vm1" do |vm1|
+    vm1.vm.box = "fedora/26-cloud-base"
+    vm1.vm.box_version = "20170705"
+    vm1.vm.network "private_network", ip: "192.168.34.2"
+    vm1.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+    end
+    vm1.vm.provision "shell", inline: <<-SHELL
+     echo "VM1 Provisioned" 
+    SHELL
+  end
+
+  config.vm.define "vm2" do |vm2|
+    vm2.vm.box = "fedora/26-cloud-base"
+    vm2.vm.box_version = "20170705"
+    vm2.vm.network "private_network", ip: "192.168.34.3"
+    vm2.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+    end
+    vm2.vm.provision "shell", inline: <<-SHELL
+      echo "VM2 Provisioned" 
+    SHELL
+  end
+
+  config.vm.define "vm3" do |vm3|
+    vm3.vm.box = "fedora/26-cloud-base"
+    vm3.vm.box_version = "20170705"
+    vm3.vm.network "forwarded_port", guest: 80, host: 8080
+    vm3.vm.network "private_network", ip: "192.168.34.4"
+    vm3.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+    end
+    vm3.vm.provision "shell", inline: <<-SHELL
+     yum update -y
+     yum install httpd -y
+     systemctl start httpd
+      echo "VM3 Provisioned" 
+    SHELL
+  end
+end
