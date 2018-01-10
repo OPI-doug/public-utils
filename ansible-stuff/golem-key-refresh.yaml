@@ -1,0 +1,12 @@
+---
+- name: golem-key-refresh
+  hosts: vault, webserver
+
+  tasks:
+  - name: copy in the golem public key
+    copy:
+      src: /home/vagrant/files/key.pub
+      dest: /home/golem/.ssh/authorized_keys
+      owner: golem
+      group: golem
+      mode: 0600
